@@ -1,0 +1,7 @@
+---
+channel: stable
+addons:
+  dash:
+    repository: "https://github.com/satishrbm/homestay-dash-main"
+    image: "ghcr.io/satishrbm/homestay-dash-main:latest"
+    target: homestay_dash

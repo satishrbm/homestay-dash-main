@@ -1,0 +1,31 @@
+name: "Homestay Dashboard"
+version: 2.0.0
+slug: homestay_dash
+description: >-
+  "A web dash for your Homestays"
+url: https://github.com/satishrbm/homestay-dash-main
+arch:
+  - armv7
+  - armhf
+  - aarch64
+  - amd64
+  - i386
+startup: services
+boot: auto
+ports:
+  4111/tcp: 4111
+ports_description:
+  4111/tcp: Web interface
+schema:
+  my_password: password
+options:
+  my_password: ""
+full_access: false
+ingress: true
+homeassistant_api: true
+auth_api: true
+hassio_api: true
+init: false
+hassio_role: admin
+webui: "http://[HOST]:[PORT:4111]"
+host_network: true
