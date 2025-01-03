@@ -16,7 +16,6 @@
                 </div>
                 <div>
                     <div class="mt-2">
-                    ======satish
                         <input v-model="data.password" id="code" name="code" type="password"
                             autocomplete="current-password" required=""
                             class="block w-full rounded-md border-l-0 border-t-0 border-r-0 border-b-2 py-2 focus:border-white bg-zinc-700 text-white shadow-sm ring-0  ring-gray-300 placeholder:text-gray-400 focus:ring-0 sm:leading-6"
@@ -32,7 +31,7 @@
     </div>
 </template>
 <script>
-import appMixen from '../mixins/app.js'
+import appMixen from '../mixins/app'
 export default {
     name: 'login-page',
     mixins: [appMixen],
