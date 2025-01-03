@@ -81,7 +81,7 @@
 <script>
 import Loader from '../components/Loader.vue';
 
-import appMixen from '../mixins/app'
+import appMixen from '../mixins/app.js'
 import { format } from "date-fns";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 export default {
@@ -179,7 +179,7 @@ export default {
     },
     watch: {
         rooms:{
-            handler(newValue,oldValue) {
+            handler() {
                 this.updateGridItemSize()
             },
             deep:true
