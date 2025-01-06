@@ -1,5 +1,5 @@
 name: "Homestay Dashboard"
-version: 2.0.2
+version: 3.0.0
 slug: homestay_dash
 description: >-
   "A web dash for your Homestays"
@@ -18,8 +18,10 @@ ports_description:
   4111/tcp: Web interface
 schema:
   my_password: password
+  labels: str
 options:
   my_password: ""
+  labels: ""
 full_access: false
 ingress: true
 homeassistant_api: true

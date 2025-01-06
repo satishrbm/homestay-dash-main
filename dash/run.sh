@@ -6,6 +6,7 @@ MY_PASSWORD=$(bashio::config 'my_password')
 APP_ENV="production"
 # Export the environment variables
 export MY_PASSWORD
+export ALLOWED_LABELS
 export APP_ENV
 
 # Start your Python application
