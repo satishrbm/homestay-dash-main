@@ -105,9 +105,21 @@ class App():
         # print("updating")
         if data is not None:
             filtered_rooms=filter_rooms(data)
-            if not filtered_rooms:
-                return False  # No valid entities found
-            save_to_file(storage_path("entities.json"),json.dumps({'rooms':filtered_rooms}))
+            room_labels=self.get_template(filtered_rooms)
+            if room_labels is None:
+                # report error
+                return False
+            new_labels={}
+            new_rooms=[]
+            for key,value in room_labels.items():
+                new_labels[value]=to_capital_case(value)
+            for item in filtered_rooms:
+                room_label=find_key_by_value(room_labels,item['id'])
+                if room_label is not None:
+                    item['label']=room_label
+                    new_rooms.append(item)
+            save_to_file(storage_path("entities.json"),json.dumps({'rooms':new_rooms,'labels':new_labels}))
+            
             return True
         # print(json.dumps(data))
         else:
@@ -118,7 +130,9 @@ class App():
         data=self._request(f"{HASS_API}template",verb="POSt",json={
             "template":template
         })
+        data=self._parse_response(data)
         # print(json.dumps(data))
+        usable_labels=parse_labels()
         if data is not None:
             new_data={}
             for key, value in data.items():
@@ -128,9 +142,11 @@ class App():
                         if "," in item:
                             sub_items=item.split(",")
                             for sub_item in sub_items:
-                                new_data[key]=sub_item
+                                if sub_item in usable_labels:
+                                    new_data[key]=sub_item
                         else:
-                            new_data[key]=item
+                            if item in usable_labels:
+                                new_data[key]=item
                 except:
                     pass
             return new_data

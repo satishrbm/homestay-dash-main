@@ -12,11 +12,13 @@ if ENV=="production":
     HASS_API = "http://supervisor/core/api/"
     HASS_URL = "ws://supervisor/core/websocket"
     MY_PASSWORD=os.getenv('MY_PASSWORD')
+    ALLOWED_LABELS=os.getenv('ALLOWED_LABELS')
 else:
     HASS_API = "http://domain:port/api/"
     HASS_URL = 'ws://domain:port/api/websocket'
     HASS_TOKEN = "token"
     MY_PASSWORD="pass"
+    ALLOWED_LABELS="basic"
 
 def get_file_content(file_path):
     # print(f"path is: {file_path}")
@@ -149,3 +151,8 @@ def log_error(status):
     log['error']=status
     save_to_file(storage_path("log.json"),json.dumps(log))
     return True
+def parse_labels():
+    items:str=re.sub(r'\s+', '_', ALLOWED_LABELS)
+    items=items.strip().lower().replace("-", "_").replace(".", "_").split(",")
+    items=[item.strip().strip("_") for item in items]
+    return items

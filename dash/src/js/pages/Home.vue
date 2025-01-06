@@ -32,6 +32,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex-1 pr-5">
+                            <div v-for="(rtype, tidx) in room_labels" @click="setActive(rtype.id)" :class="[!platform.is_touch?'hover:bg-zinc-700':'',active_label==rtype.id?'bg-zinc-900':'','flex space-x-5 items-center py-1 px-1 sm:py-3 sm:px-3 mt-1 rounded-md cursor-pointer']">
+                                <span
+                                    :class="[rtype.empty ? 'bg-zinc-600' : rtype.occupied ? 'bg-green-50' : ' bg-yellow-50', 'p-1.5 rounded-full ']">
+                                    <svg v-if="rtype.empty" class="h-6 w-6 sm:h-9 sm:w-9  fill-zinc-800"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <title>bed-empty</title>
+                                        <path d="M19,7H5V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7" />
+                                    </svg>
+                                    <svg v-else
+                                        :class="[rtype.occupied ? 'fill-green-600' : 'fill-yellow-600', 'h-6 w-6 sm:h-9 sm:w-9']"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <title>bed</title>
+                                        <path
+                                            d="M19,7H11V14H3V5H1V20H3V17H21V20H23V11A4,4 0 0,0 19,7M7,13A3,3 0 0,0 10,10A3,3 0 0,0 7,7A3,3 0 0,0 4,10A3,3 0 0,0 7,13Z" />
+                                    </svg>
+                                </span>
+                                <div class="tracking-wide text-xs sm:text-sm">
+                                    <h3 class="font-semibold text-zinc-200 line-clamp-1">{{ rtype.name }}</h3>
+                                    <p class="text-zinc-400 line-clamp-1">{{ rtype.status }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -94,14 +117,24 @@ export default {
     data() {
         return {
             loading: true,
+            active_label:null,
             false: false,
             next_room: null,
             date: null,
             errors: [],
+            getting_labels: false,
             height: 0,
         }
     },
     methods: {
+        setActive(label){
+            console.error(label);
+            if (this.active_label==label){
+                this.active_label=null
+            }else{
+                this.active_label=label
+            }
+        },
         async changeRoomState(room, is_vacant) {
             this.wait(true)
             try {
@@ -156,10 +189,41 @@ export default {
             return rooms
         },
         display_rooms(){
-            return this.rooms;
+            if (this.active_label==null){
+                return this.rooms
+            }
+            return this.rooms.filter(el=>{
+                return el.label==this.active_label
+            })
+        },
+        labels() {
+            return this.$store.getters['labels']
         },
         platform() {
             return this.$store.getters['platform']
+        },
+        room_labels() {
+            let labels = []
+            Object.keys(this.labels).forEach(label=>{
+                let total = this.rooms.filter(element => {
+                    return element.label==label
+                })
+                let empty = this.rooms.filter(element => {
+                    return element.label==label && element.is_vacant
+                })
+                let occupied = this.rooms.filter(element => {
+                    return element.label==label && !element.is_vacant
+                })
+                let status = 'All Vacant';
+                if (occupied.length == total.length) {
+                    status = 'All Occupied'
+                } else if (occupied.length > 0) {
+                    status = occupied.length + ' Occupied'
+                }
+                labels.push({ name: this.labels[label], id: label, total: total.length, status: status, empty: occupied.length == 0, occupied: occupied.length == total.length })
+            })
+            labels.sort((a, b) => b.total - a.total );
+            return labels
         },
         summary() {
             let occupied = this.rooms.filter(element => {
