@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-import appMixen from '../mixins/app'
+import appMixen from '../mixins/app.js'
 export default {
     name: 'login-page',
     mixins: [appMixen],

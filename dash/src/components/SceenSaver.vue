@@ -10,8 +10,10 @@
         </TransitionChild>
     </TransitionRoot>
 </template>
+
 <script>
 import { TransitionChild, TransitionRoot } from '@headlessui/vue'
+
 export default {
     name: 'screen-saver',
     components: {
@@ -28,7 +30,7 @@ export default {
         window.addEventListener('mousemove', this.resetIdleTimer);
         window.addEventListener('keydown', this.resetIdleTimer);
     },
-    beforeDestroy() {
+    beforeUnmount() { // Updated from beforeDestroy to beforeUnmount
         window.removeEventListener('mousemove', this.resetIdleTimer);
         window.removeEventListener('keydown', this.resetIdleTimer);
         this.clearIdleTimeout();

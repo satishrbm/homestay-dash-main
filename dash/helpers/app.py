@@ -107,7 +107,7 @@ def filter_rooms(payload):
             })
 
     # Sort the formatted list by id
-    formatted_list.sort(key=lambda x: int(x['id']))
+    formatted_list.sort(key=lambda x: x['id'])
 
     # Update the state for front end
     return formatted_list
