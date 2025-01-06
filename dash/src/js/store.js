@@ -10,6 +10,7 @@ const store = createStore({
             platform: null,
             auth_token:{},
             rooms: [],
+            labels: [],
             room_types: {},
             device_id: {},
             error:false
@@ -24,6 +25,9 @@ const store = createStore({
         },
         error(state){
             return state.error
+        },
+        labels(state){
+            return state.labels
         },
         device_id(state) {
             return state.device_id;
@@ -93,6 +97,9 @@ const store = createStore({
             state.error=payload
         },
         entities(state,payload){
+            if (state.labels!==payload.labels) {
+                state.labels=payload.labels
+            }
             if (state.rooms!==payload.rooms) {
                 state.rooms=payload.rooms
             }
@@ -109,6 +116,10 @@ const store = createStore({
         },
         platform(state, payload) {
             state.platform = payload;
+        },
+        labels(state,payload) {
+            // Create a temporary object to group rooms by their types
+            state.room_types=payload;
         },
         // room_types(state, payload) {
         //     state.room_types = payload;
