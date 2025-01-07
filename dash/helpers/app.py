@@ -101,9 +101,18 @@ def filter_rooms(payload):
     for entity in entities:
         match = pattern.match(entity['entity_id'])
         if match:
+            entity_state = entity['state']
+            # Determine the value of is_vacant
+            if entity_state == 'off':
+                is_vacant = True
+            elif entity_state == 'on':
+                is_vacant = False
+            else:
+                is_vacant = "error"
+
             formatted_list.append({
                 'id': match.group(1),
-                'is_vacant': entity['state'] == 'off'
+                'is_vacant': is_vacant
             })
 
     # Sort the formatted list by id
