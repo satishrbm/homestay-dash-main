@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="flex-1 pr-5">
-                            <div v-for="(rtype, tidx) in room_labels" @click="setActive(rtype.id)" :class="[!platform.is_touch?'hover:bg-zinc-700':'',active_label==rtype.id?'bg-zinc-900':'','flex space-x-5 items-center py-1 px-1 sm:py-3 sm:px-3 mt-1 rounded-md cursor-pointer']">
+                            <div v-for="rtype in room_labels" :key="rtype.id" @click="setActive(rtype.id)" :class="[!platform.is_touch?'hover:bg-zinc-700':'',active_label==rtype.id?'bg-zinc-900':'','flex space-x-5 items-center py-1 px-1 sm:py-3 sm:px-3 mt-1 rounded-md cursor-pointer']">
                                 <span
                                     :class="[rtype.empty ? 'bg-zinc-600' : rtype.occupied ? 'bg-green-50' : ' bg-yellow-50', 'p-1.5 rounded-full ']">
                                     <svg v-if="rtype.empty" class="h-6 w-6 sm:h-9 sm:w-9  fill-zinc-800"
@@ -208,9 +208,6 @@ export default {
                 let total = this.rooms.filter(element => {
                     return element.label==label
                 })
-                let empty = this.rooms.filter(element => {
-                    return element.label==label && element.is_vacant
-                })
                 let occupied = this.rooms.filter(element => {
                     return element.label==label && !element.is_vacant
                 })
@@ -220,7 +217,7 @@ export default {
                 } else if (occupied.length > 0) {
                     status = occupied.length + ' Occupied'
                 }
-                labels.push({ name: this.labels[label], id: label, total: total.length, status: status, empty: occupied.length == 0, occupied: occupied.length == total.length })
+                labels.push({ name: this.labels[label], id: label, total: total.length, status: status, occupied: occupied.length == total.length })
             })
             labels.sort((a, b) => b.total - a.total );
             return labels
