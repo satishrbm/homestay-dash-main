@@ -7,12 +7,12 @@ export default{
                 params:params,
                 timeout:timeout
             });
-            if (response.data.hasOwnProperty("data")) {
+            if (Object.prototype.hasOwnProperty.call(response.data, "data")) {
                 return {status:true,data:response.data.data};
             }
             return {status:true};
         } catch (error) {
-            if(!error.hasOwnProperty('response')){
+            if(!Object.prototype.hasOwnProperty.call(error, 'response')){
                 return {status:false};
             }
             switch (error.response.status) {
@@ -34,12 +34,12 @@ export default{
                 },
                 params:params
             });
-            if (response.data.hasOwnProperty("data")) {
+            if (Object.prototype.hasOwnProperty.call(response.data, "data")) {
                 return {status:true,data:response.data.data};
             }
             return {status:true};
         } catch (error) {
-            if(!error.hasOwnProperty('response')){
+            if(!Object.prototype.hasOwnProperty.call(error, 'response')){
                 return {status:false};
             }
             switch (error.response.status) {
@@ -62,7 +62,7 @@ export default{
             
             switch (response.status) {
                 case 200: case 201:
-                    if (response.data.hasOwnProperty("data")) {
+                    if (Object.prototype.hasOwnProperty.call(response.data, "data")) {
                         return {status:true,data:response.data.data};
                     }
                     return {status:true};
@@ -71,7 +71,7 @@ export default{
             }
             
         } catch (error) {
-            if(!error.hasOwnProperty('response')){
+            if(!Object.prototype.hasOwnProperty.call(error, 'response')){
                 return {status:false};
             }
             switch (error.response.status) {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // import PageNotFound from './pages/404.vue';
-const Home = () => import('./pages/Home.vue');
-const Login = () => import('./pages/Login.vue');
+const Home = () => import('./Pages/Home.vue');
+const Login = () => import('./Pages/Login.vue');
 const router = createRouter({
     history: createWebHistory(),
     linkActiveClass: 'active',
@@ -19,7 +19,5 @@ const router = createRouter({
         
     ]
 });
-
-console.log('Router initialized:', router);
 
 export default router

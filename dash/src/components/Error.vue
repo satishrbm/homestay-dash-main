@@ -9,7 +9,7 @@
 
             <p class="text-4xl md:text-6xl font-extralight tracking-wider mt-8 text-white text-center">We've encountered an error!
             </p>
-            <p class="text-xl font-extralight tracking-wider mt-8 text-zinc-400 text-left">There might be a problem. Please check your internet connection. If its working, try restarting the local server. If you still see this message, contact customer care for further assistance.</p>
+            <p class="text-xl font-extralight tracking-wider mt-8 text-zinc-400 text-left">There might be a problem. Please check your internet connection. If it's working, try restarting the local server. If you still see this message, contact customer care for further assistance.</p>
             
             <div class="mt-8 text-center">
                 <button @click="reload()" type="button"
@@ -18,23 +18,19 @@
         </div>
     </div>
 </template>
+
 <script>
-import { TransitionChild, TransitionRoot } from '@headlessui/vue'
 export default {
-    name: 'error page',
-    components: {
-        TransitionChild, TransitionRoot
-    },
+    name: 'ErrorPage', // Updated to a multi-word name
     data() {
         return {
             is_time: false
         }
     },
     methods: {
-        reload(){
+        reload() {
             window.location.reload();
         }
-    },
-    computed: {},
+    }
 }
 </script>

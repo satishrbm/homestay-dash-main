@@ -10,7 +10,7 @@
                     <div class="mt-5 text-zinc-100">{{ beauty_date.day }}</div>
                     <div :class="[platform.os=='ios'?'pb-20 md:pb-0':'','flex-1 overflow-y-auto overflow-x-hidden']">
                         <div class="pr-5 ">
-                            <div>
+                            <div class="hover:bg-zinc-700 flex space-x-5 items-center py-1 px-1 sm:py-3 sm:px-3 mt-1 rounded-md cursor-pointer">
                                 <span
                                     :class="[summary.empty ? 'bg-zinc-600' : summary.occupied ? 'bg-green-50' : 'bg-yellow-50', 'p-1.5  rounded-full']">
                                     <svg v-if="summary.empty" class="h-6 w-6 sm:h-9 sm:w-9 fill-zinc-800"
@@ -104,7 +104,7 @@
 <script>
 import Loader from '../components/Loader.vue';
 
-import appMixen from '../mixins/app'
+import appMixen from '../mixins/app.js'
 import { format } from "date-fns";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 export default {
@@ -243,7 +243,7 @@ export default {
     },
     watch: {
         rooms:{
-            handler(newValue,oldValue) {
+            handler() {
                 this.updateGridItemSize()
             },
             deep:true
