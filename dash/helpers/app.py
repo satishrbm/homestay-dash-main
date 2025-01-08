@@ -108,7 +108,7 @@ def filter_rooms(payload):
             elif entity_state == 'on':
                 is_vacant = False
             else:
-                is_vacant = "error"
+                is_vacant = True
 
             formatted_list.append({
                 'id': match.group(1),
